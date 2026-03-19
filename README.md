@@ -1,4 +1,4 @@
-#  ScrapeX – Advanced Web Scraping Platform
+#  ScrapeX - Web Scraping Platform
 
 A scalable, rule-based web scraping platform built in Python that supports automated data extraction from both static and dynamic websites, with job management, API integration, and multi-format data export.
 
