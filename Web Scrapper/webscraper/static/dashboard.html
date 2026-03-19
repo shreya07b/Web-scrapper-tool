@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScrapeX Dashboard</title>
+  <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">S</div>
+        <div>
+          <h1>ScrapeX</h1>
+          <p>Scraping Control Plane</p>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-item active">Dashboard</button>
+        <button class="nav-item">Create Job</button>
+        <button class="nav-item">Results</button>
+        <button class="nav-item">Logs</button>
+        <button class="nav-item">Settings</button>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Operations</p>
+          <h2>Dashboard</h2>
+        </div>
+        <div class="topbar-actions">
+          <div class="live-indicator">
+            <span class="pulse"></span>
+            <span id="liveLabel">Scraping in Progress...</span>
+          </div>
+          <div class="status-pill">
+            <span class="dot"></span>
+            <span id="apiStatus">Connected</span>
+          </div>
+          <div class="user-pill">SX</div>
+        </div>
+      </header>
+
+      <section class="stats-grid">
+        <article class="stat-card">
+          <div class="stat-icon">J</div>
+          <div>
+            <p>Total Jobs</p>
+            <h3 id="totalJobs">0</h3>
+          </div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon accent-warn">A</div>
+          <div>
+            <p>Active Jobs</p>
+            <h3 id="activeJobs">0</h3>
+          </div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon accent-success">S</div>
+          <div>
+            <p>Success Rate</p>
+            <h3 id="successRate">0%</h3>
+          </div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon accent-blue">R</div>
+          <div>
+            <p>Records Scraped</p>
+            <h3 id="recordsScraped">0</h3>
+          </div>
+        </article>
+      </section>
+
+      <section class="workspace-grid">
+        <div class="panel job-form-panel">
+          <div class="panel-header">
+            <h3>Create Scraping Job</h3>
+            <p>Launch a new run from an existing rule.</p>
+          </div>
+          <form id="jobForm" class="job-form">
+            <label>
+              <span>Rule ID</span>
+              <select id="ruleId" required></select>
+            </label>
+            <label>
+              <span>Mode</span>
+              <select id="mode">
+                <option value="static">Static</option>
+                <option value="dynamic">Dynamic</option>
+                <option value="auto">Auto</option>
+              </select>
+            </label>
+            <label>
+              <span>Pages</span>
+              <input id="pages" type="number" min="1" max="50" value="2">
+            </label>
+            <button type="submit" class="primary-btn">Run Job</button>
+          </form>
+        </div>
+
+        <div class="panel job-status-panel">
+          <div class="panel-header">
+            <h3>Job Status</h3>
+            <p>Latest active or selected job.</p>
+          </div>
+          <div class="status-block">
+            <div class="status-row"><span>Job ID</span><strong id="selectedJobId">None</strong></div>
+            <div class="status-row"><span>Status</span><span id="selectedJobStatus" class="badge">Idle</span></div>
+            <div class="status-row"><span>Progress</span><strong id="selectedJobProgress">0%</strong></div>
+            <div class="progress-track">
+              <div id="progressBar" class="progress-fill"></div>
+            </div>
+          </div>
+          <div class="mini-chart">
+            <div class="panel-header compact">
+              <h3>Records Per Job</h3>
+            </div>
+            <div id="chartBars" class="chart-bars"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel table-panel">
+        <div class="table-toolbar">
+          <div>
+            <h3>Results</h3>
+            <p>Latest job output with searchable rows.</p>
+          </div>
+          <div class="toolbar-actions">
+            <input id="tableSearch" type="search" placeholder="Search results">
+            <button id="refreshBtn" class="ghost-btn">Refresh</button>
+            <a id="exportCsvBtn" class="ghost-btn link-btn" href="#" target="_blank">Export CSV</a>
+            <a id="exportJsonBtn" class="ghost-btn link-btn" href="#" target="_blank">Export JSON</a>
+            <button id="clearBtn" class="ghost-btn" type="button">Clear</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Availability</th>
+                <th>Link</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="resultsTableBody">
+              <tr><td colspan="5" class="empty-state">No results loaded yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel logs-panel">
+        <div class="panel-header">
+          <h3>Logs</h3>
+          <p>Live events for the selected job.</p>
+        </div>
+        <div id="logsContainer" class="logs-container">
+          <div class="log-line">Waiting for job selection...</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/dashboard.js"></script>
+</body>
+</html>

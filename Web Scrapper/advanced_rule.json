@@ -1,0 +1,51 @@
+{
+  "site_name": "books_demo",
+  "rule": {
+    "site_name": "books_demo",
+    "start_urls": [
+      "https://books.toscrape.com/catalogue/category/books/travel_2/index.html"
+    ],
+    "scraper_type": "static",
+    "item_selector": "article.product_pod",
+    "headers": {
+      "Accept-Language": "en-US,en;q=0.9"
+    },
+    "pagination": {
+      "type": "next_button",
+      "selector": "li.next a",
+      "max_pages": 2
+    },
+    "anti_block": {
+      "max_retries": 3,
+      "backoff_seconds": 1.0,
+      "rate_limit_per_second": 1.0,
+      "proxy_urls": [],
+      "rotate_user_agent": true,
+      "timeout_seconds": 20
+    },
+    "fields": [
+      {
+        "name": "title",
+        "selector": "h3 a",
+        "attr": "title",
+        "required": true
+      },
+      {
+        "name": "price",
+        "selector": "p.price_color",
+        "required": true
+      },
+      {
+        "name": "availability",
+        "selector": "p.instock",
+        "required": true
+      },
+      {
+        "name": "product_link",
+        "selector": "h3 a",
+        "attr": "href",
+        "required": true
+      }
+    ]
+  }
+}
